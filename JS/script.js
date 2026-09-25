@@ -1,24 +1,27 @@
-const botaoStatus = document.getElementById("btn-status");
 document.addEventListener("DOMContentLoaded", () => {
-  // Seleciona todos os cards da seção
-  const cards = document.querySelectorAll(".card-servico-expansivel");
+  // Menu hamburguer (mobile)
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("main-nav");
 
-  cards.forEach((card) => {
-    const btn = card.querySelector("button");
-    const conteudo = card.querySelector(".conteudo-oculto");
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const ativo = nav.classList.toggle("ativo");
+      toggle.classList.toggle("ativo", ativo);
+      toggle.setAttribute("aria-expanded", String(ativo));
+    });
+  }
 
-    if (btn && conteudo) {
-      btn.addEventListener("click", () => {
-        // Alterna a classe que exibe o conteúdo
-        const estaAberto = conteudo.classList.toggle("ativo");
-
-        // Atualiza a acessibilidade (aria-hidden)
-        conteudo.setAttribute("aria-hidden", !estaAberto);
-
-        // Altera o texto do botão
-        btn.textContent = estaAberto ? "Recolher" : "Saiba mais";
-      });
-    }
-  });
+  // Botão "Aceitar proposta"
+  const btnAceitar = document.getElementById("btn-aceitar-proposta");
+  if (btnAceitar) {
+    btnAceitar.addEventListener("click", () => {
+      btnAceitar.disabled = true;
+      const textoOriginal = btnAceitar.innerHTML;
+      btnAceitar.innerHTML = "Proposta aceita ✓";
+      setTimeout(() => {
+        btnAceitar.innerHTML = textoOriginal;
+        btnAceitar.disabled = false;
+      }, 2500);
+    });
+  }
 });
-
